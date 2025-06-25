@@ -57,7 +57,7 @@ a   b   XOR(a, b)
 1   1       0
 */
 pub fn xor(a: &bool, b: &bool) -> bool {
-    or(and(*a, not(*b)), and(not(*a), *b)) // Fixed not(*b) to not(*a)
+    or(and(*a, not(*b)), and(not(*a), *b))
 }
 
 /*
