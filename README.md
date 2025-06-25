@@ -1,6 +1,6 @@
-# logicSeries
+# binarySeries
 
-logicSeries is a repository dedicated to understanding the binary system.
+binarySeries is a repository dedicated to understanding the binary system.
 
 It works together with the binary series on [lukefi.com](https://lukefi.com/).
 
