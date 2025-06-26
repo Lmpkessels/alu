@@ -12,15 +12,15 @@ fn full_addr(a: &bool, b: &bool, cin: &bool) -> (bool, bool) {
     (sum, cout)
 }
 
-// eight bit full adder, receiving as argument two arrays, and boolean carry in.
+// eight bit full adder, receiving as argument two arrays.
 // Fn returns a array with 8 boolean expressions + overflow.
 fn eight_bit_full_addr(a: &[bool; 8], b: &[bool; 8]) -> ([bool; 8], bool) {
-    // Array, default boolean expression is false, range is 8 boolean expressions.
+    // Array, boolean expression false by default, array range 8.
     let mut total = [false; 8];
     // Carry out, by default false.
     let mut cout = false;
 
-    // Get i out of range 0..8, then reverse because we start at righ-most lsb.
+    // Get (i) in range 0..8. Then reverse to start at righ-most-bit (lsb).
     for i in (0..8).rev() {
         // Function creating a total then assigning it to sum and cin.
         let (addr, overflow) = full_addr(&a[i], &b[i], &cout);
