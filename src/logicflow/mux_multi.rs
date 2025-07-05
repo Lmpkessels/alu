@@ -90,7 +90,7 @@ fn mux8way(inp: &[[u8; 8]; 8], sel: u8) -> [u8; 8] {
 
 
 fn main() {
-    // Create arguments for input mux4way.
+    // Create argument for input mux4way.
     let check = [
         [1, 0, 1, 1, 0, 1, 0, 1],
         [1, 0, 0, 1, 0, 0, 1, 1],
@@ -106,7 +106,7 @@ fn main() {
 
     println!("\n");
 
-    // Create arguments for input mux8way.
+    // Create argument for input mux8way.
     let check_2 = [
         [1, 0, 1, 1, 0, 1, 0, 1],
         [1, 0, 0, 1, 0, 0, 1, 1],
