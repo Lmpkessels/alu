@@ -21,3 +21,13 @@ Rust which communicates at the lowest level with computer components.
 
 Rewrite, using cleaner controll flow. Then build `and8multi` `xor8multi` `not8`
 etc.
+
+## Update on 8MULTI
+
+Used loops to make the code shorter, and more efficient.
+
+## What I learned:
+
+- That what you put in the loop gets looped that ammound of time, so if a println!
+  contains the value of `"Hello"`, and the loop has a range of 8 for example then
+  `"Hello"` is printed 8 times.
