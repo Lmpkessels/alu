@@ -90,6 +90,7 @@ fn mux8way(inp: &[[u8; 8]; 8], sel: u8) -> [u8; 8] {
 
 
 fn main() {
+    // Create arguments for input mux4way.
     let check = [
         [1, 0, 1, 1, 0, 1, 0, 1],
         [1, 0, 0, 1, 0, 0, 1, 1],
@@ -97,6 +98,7 @@ fn main() {
         [0, 1, 0, 1, 0, 1, 0, 1],
     ];
 
+    // Check if mux4way works as progrmmed for.
     mux4way(&check, 0);
     mux4way(&check, 1);
     mux4way(&check, 2);
@@ -104,6 +106,7 @@ fn main() {
 
     println!("\n");
 
+    // Create arguments for input mux8way.
     let check_2 = [
         [1, 0, 1, 1, 0, 1, 0, 1],
         [1, 0, 0, 1, 0, 0, 1, 1],
@@ -115,6 +118,7 @@ fn main() {
         [0, 1, 0, 1, 0, 1, 0, 1],
     ];
 
+    // Check if mux8way works as progrmmed for.
     mux8way(&check_2, 0);
     mux8way(&check_2, 1);
     mux8way(&check_2, 2);
