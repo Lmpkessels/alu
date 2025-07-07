@@ -8,11 +8,11 @@ Else, an error message is raised.
 
 Input (inp: [u8; 8]) == declared as the active slot.
 */
-fn dmux4way(inp: [u8; 8], sel: u8) -> [[u8; 8]; 4] {
+fn dmux4way(inp: &[u8; 8], sel: u8) -> [[u8; 8]; 4] {
     // If selector == 0 first slot is active.
     if sel == 0 {
         let array = [
-            inp,
+            *inp,
             [0; 8], 
             [0; 8], 
             [0; 8],
@@ -24,7 +24,7 @@ fn dmux4way(inp: [u8; 8], sel: u8) -> [[u8; 8]; 4] {
     if sel == 1 {
         let array = [
             [0; 8],
-            inp, 
+            *inp, 
             [0; 8],
             [0; 8],
         ];
@@ -36,7 +36,7 @@ fn dmux4way(inp: [u8; 8], sel: u8) -> [[u8; 8]; 4] {
         let array = [
             [0; 8], 
             [0; 8], 
-            inp, 
+            *inp, 
             [0; 8],
         ];
         println!("{array:?}");
@@ -48,7 +48,7 @@ fn dmux4way(inp: [u8; 8], sel: u8) -> [[u8; 8]; 4] {
             [0; 8], 
             [0; 8], 
             [0; 8], 
-            inp,
+            *inp,
         ];
         println!("{array:?}");
         return array;
@@ -60,5 +60,5 @@ fn dmux4way(inp: [u8; 8], sel: u8) -> [[u8; 8]; 4] {
 
 fn main() {
     const IN: [u8; 8] = [1; 8];
-    dmux4way(IN, 1);
+    dmux4way(&IN, 1);
 }
