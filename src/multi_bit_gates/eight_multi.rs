@@ -11,8 +11,8 @@ and returned by the function.
 
 // OR 8 Multi: applies OR logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-fn or8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> { 
-    let mut storage = Vec::with_capacity(16);
+pub fn or8multi(inp: [[u8; 16]; 8]) -> [u8; 16] { 
+    let mut storage = [0; 16];
 
     // Loop through each bit index.
     for i in 0..16 {
@@ -23,7 +23,7 @@ fn or8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
             result |= inp[a][i];
         }
         // Store bit in storage.
-        storage.push(result);
+        storage[i] = result;
     }
 
     // Return storage.
@@ -32,8 +32,8 @@ fn or8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
 
 // AND 8 Multi: applies AND logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-fn and8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
-    let mut storage = Vec::with_capacity(16);
+pub fn and8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
+    let mut storage = [0; 16];
 
     // Loop through each bit index.
     for i in 0..16 {
@@ -44,7 +44,7 @@ fn and8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
             result &= inp[a][i];
         }
         // Store bit in storage.
-        storage.push(result);
+        storage[i] = result;
     }
 
     // Return storage.
@@ -53,8 +53,8 @@ fn and8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
 
 // XOR 8 Multi: applies XOR logic bit-by-bit on all index 0, then 1, etc.  
 // Returns a vector of 16 bits.
-fn xor8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
-    let mut storage = Vec::with_capacity(16);
+pub fn xor8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
+    let mut storage = [0; 16];
 
     // Loop through each bit index.
     for i in 0..16 {
@@ -64,7 +64,7 @@ fn xor8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
             // Apply XOR logic bit-by-bit, index-by-index.
             result ^= inp[a][i];
         }
-        storage.push(result);
+        storage[i] = result;
     }
 
     // Return storage.
@@ -73,8 +73,8 @@ fn xor8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
 
 // NAND 8 Multi: applies NOT AND logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-fn nand8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
-    let mut storage = Vec::with_capacity(16);
+pub fn nand8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
+    let mut storage = [0; 16];
 
     // Loop through each bit index.
     for i in 0..16 {
@@ -86,7 +86,7 @@ fn nand8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
         }
         // Apply NOT to the result and mask to keep only the last bit.
         result = !result & 1;
-        storage.push(result);
+        storage[i] = result;
     }
 
     // Return storage.
@@ -95,8 +95,8 @@ fn nand8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
 
 // NOR 8 Multi: applies NOT OR logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-fn nor8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
-    let mut storage = Vec::with_capacity(16);
+pub fn nor8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
+    let mut storage = [0; 16];
 
     // Loop through each bit index.
     for i in 0..16 {
@@ -108,39 +108,73 @@ fn nor8multi(inp: &[[u8; 16]; 8]) -> Vec<u8> {
         }
         // Apply NOT to the result and mask to keep only the last bit.
         result = !result & 1;
-        storage.push(result);
+        storage[i] = result;
     }
     
     storage
 }
 
+#[cfg(test)]
+mod test {
+    use super::*;
 
-fn main() {
-    // Check if everything works.    
-    let test = [
-        [0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1], 
-        [0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0], 
-        [0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0],
-        [0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1],
-        [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0], 
-        [0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0], 
-        [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1], 
-        [0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0],
+    fn array_test_value() -> [[u8; 16]; 8] {
+        let array = [
+            [0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1], 
+            [0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0], 
+            [0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0],
+            [0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1],
+            [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0], 
+            [0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0], 
+            [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1], 
+            [0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0],
         ];
 
-    // Give each functions parameter an argument.
-    let test0 = or8multi(&test);
-    let test1 = and8multi(&test);
-    let test2 = xor8multi(&test);
-    let test3 = nand8multi(&test);
-    let test4 = nor8multi(&test);
+        array
+    }
 
-    // Check if it's correct.
-    println!(
-        "OR: {test0:?}
-        \nAND: {test1:?}
-        \nXOR: {test2:?}
-        \nNAND: {test3:?}
-        \nNOR: {test4:?}"
-    );
+    #[test]
+    // Test or8multi.
+    fn return_1_array_after_applying_or_logic_bit_by_bit_per_index_position() {
+        let input = array_test_value();
+        let expected = [0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1];
+
+        assert_eq!(or8multi(input), (expected));
+    }
+
+    #[test]
+    // Test and8multi.
+    fn return_1_array_after_applying_and_logic_bit_by_bit_per_inder_position() {
+        let input = array_test_value();
+        let expected = [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+
+        assert_eq!(and8multi(input), (expected));
+    }
+
+    #[test]
+    // Test xor8multi.
+    fn return_1_array_after_applying_xor_logic_bit_by_bit_per_inder_position() {
+        let input = array_test_value();
+        let expected = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1];
+
+        assert_eq!(xor8multi(input), (expected));
+    }
+
+    #[test]
+    // Test nand8multi.
+    fn return_1_array_after_applying_nand_logic_bit_by_bit_per_inder_position() {
+        let input = array_test_value();
+        let expected = [1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1];
+
+        assert_eq!(nand8multi(input), (expected));
+    }
+
+    #[test]
+    // Test nor8multi.
+    fn return_1_array_after_applying_nor_logic_bit_by_bit_per_inder_position() {
+        let input = array_test_value();
+        let expected = [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
+
+        assert_eq!(nor8multi(input), (expected));
+    }
 }

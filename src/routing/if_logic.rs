@@ -1,5 +1,4 @@
-mod gates;
-use gates::*;
+use crate::gates::basic::{not, and, or};
 
 /*
 fn _if is a logic expression that returns True
@@ -15,8 +14,8 @@ a   b   NOT(b)  AND(a, NOT(b))
 1   0     1           1
 1   1     0           0
 */
-pub fn _if(a: &bool, b: &bool) -> bool {
-   and(*a, not(*b))
+pub fn _if(a: u8, b: u8) -> u8 {
+   and(a, not(b))
 }
 
 /*
@@ -35,8 +34,8 @@ a   b   NOT(a)  OR(NOT(a), b)
 1   0     0          0
 1   1     0          1
 */
-pub fn if_then(a: &bool, b: &bool) -> bool {
-   or(not(*a), *b)
+pub fn if_then(a: u8, b: u8) -> u8 {
+   or(not(a), b)
 }
 
 /*
@@ -58,6 +57,41 @@ a   b   c   AND(a, b)    NOT(a)     AND(NOT(a), c)  OR(AND(a, b), AND(NOT(a), c)
 1   0   1       0           0             0                     0
 1   1   1       1           0             0                     1
 */
-pub fn if_then_else(a: &bool, b: &bool, c: &bool) -> bool {
-   or(and(*a, *b), and(not(*a), *c))
+pub fn if_then_else(a: u8, b: u8, c: u8) -> u8 {
+   or(and(a, b), and(not(a), c))
+}
+
+fn main() {
+
+}
+
+#[cfg(test)]
+mod test {
+   use super::*;
+
+   #[test]
+   fn a_returns_true_only_if_b_is_false() {
+      assert_eq!(_if(0, 0), (0));
+      assert_eq!(_if(0, 1), (0));
+      assert_eq!(_if(1, 0), (1));
+      assert_eq!(_if(1, 1), (0));
+   }
+
+   #[test]
+   fn if_then_only_returns_false_if_a_is_true_and_b_is_false() {
+      assert_eq!(if_then(0, 0), (1));
+      assert_eq!(if_then(0, 1), (1));
+      assert_eq!(if_then(1, 0), (0));
+      assert_eq!(if_then(1, 1), (1));
+   }
+
+   #[test]
+   fn if_then_else_returns_true_if_a_is_0_or_a_and_b_are_both_0_and_c_is_1() {
+      assert_eq!(if_then_else(0, 0, 0), (0));
+      assert_eq!(if_then_else(0, 0, 1), (1));
+      assert_eq!(if_then_else(0, 1, 1), (1));
+      assert_eq!(if_then_else(1, 1, 1), (1));
+      assert_eq!(if_then_else(1, 0, 1), (0));
+      assert_eq!(if_then_else(1, 1, 0), (1));
+   }
 }
