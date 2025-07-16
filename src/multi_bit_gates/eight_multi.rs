@@ -11,7 +11,7 @@ and returned by the function.
 
 // OR 8 Multi: applies OR logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-pub fn or8multi(inp: [[u8; 16]; 8]) -> [u8; 16] { 
+fn or8multi(inp: [[u8; 16]; 8]) -> [u8; 16] { 
     let mut storage = [0; 16];
 
     // Loop through each bit index.
@@ -32,7 +32,7 @@ pub fn or8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
 
 // AND 8 Multi: applies AND logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-pub fn and8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
+fn and8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
     let mut storage = [0; 16];
 
     // Loop through each bit index.
@@ -53,7 +53,7 @@ pub fn and8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
 
 // XOR 8 Multi: applies XOR logic bit-by-bit on all index 0, then 1, etc.  
 // Returns a vector of 16 bits.
-pub fn xor8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
+fn xor8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
     let mut storage = [0; 16];
 
     // Loop through each bit index.
@@ -73,7 +73,7 @@ pub fn xor8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
 
 // NAND 8 Multi: applies NOT AND logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-pub fn nand8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
+fn nand8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
     let mut storage = [0; 16];
 
     // Loop through each bit index.
@@ -95,7 +95,7 @@ pub fn nand8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
 
 // NOR 8 Multi: applies NOT OR logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-pub fn nor8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
+fn nor8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
     let mut storage = [0; 16];
 
     // Loop through each bit index.

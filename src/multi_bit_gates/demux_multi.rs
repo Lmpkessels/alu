@@ -8,7 +8,7 @@ Else, an error message is raised.
 
 Input (inp: [u8; 8]) == declared as the active slot.
 */
-pub fn dmux4way(inp: [u8; 8], sel: u8) -> [[u8; 8]; 4] {
+fn dmux4way(inp: [u8; 8], sel: u8) -> [[u8; 8]; 4] {
     // If selector == 0 first slot is active.
     if sel == 0 {
         let array = [
@@ -56,10 +56,6 @@ pub fn dmux4way(inp: [u8; 8], sel: u8) -> [[u8; 8]; 4] {
 
     // Handle invalid selector input.
     panic!("Invalid! selector: must be 0-3");
-}
-
-fn main() {
-    
 }
 
 #[cfg(test)]

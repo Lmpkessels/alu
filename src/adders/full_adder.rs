@@ -1,7 +1,7 @@
 use crate::gates::basic::{xor, or, and};
 
 // Full adder returning Sum and Carry out in boolean data-type.
-pub fn full_addr(a: u8, b: u8, cin: u8) -> (u8, u8) {
+fn full_addr(a: u8, b: u8, cin: u8) -> (u8, u8) {
     // Sum logic -> a AND b = bit, then Bit AND Cin, is end Bit.
     let sum = xor(xor(a, b), cin);
     // Cout logic -> (a AND b = Bit), OR (a XOR b = Bit, AND Cin = Bit) = Bit.
@@ -13,7 +13,7 @@ pub fn full_addr(a: u8, b: u8, cin: u8) -> (u8, u8) {
 
 // eight bit full adder, receiving as argument two arrays.
 // Fn returns a array with 8 boolean expressions + overflow.
-pub fn eight_bit_full_addr(a: [u8; 8], b: [u8; 8]) -> ([u8; 8], u8) {
+fn eight_bit_full_addr(a: [u8; 8], b: [u8; 8]) -> ([u8; 8], u8) {
     // Array, boolean expression false by default, array range 8.
     let mut total = [0; 8];
     // Carry out, by default false.
@@ -31,10 +31,6 @@ pub fn eight_bit_full_addr(a: [u8; 8], b: [u8; 8]) -> ([u8; 8], u8) {
 
     // Return array and carry out(overflow in this case).
     (total, cout)
-}
-
-fn main() {
-    
 }
 
 #[cfg(test)]

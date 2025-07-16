@@ -12,7 +12,7 @@ The function returns an array of 8 bits when a match is found.
 */
 
 // 8-WAY MULTIPLEXER: selects and returns one of 8 arrays based on selector.
-pub fn mux8way(inp: &[[u8; 8]; 8], sel: u8) -> [u8; 8] {
+fn mux8way(inp: &[[u8; 8]; 8], sel: u8) -> [u8; 8] {
     // Logic: if selector is 0, return A. If 1, return B. Etc.
     if sel == 0 {
         let a = inp[0];

@@ -1,7 +1,7 @@
 use crate::gates::basic::{xor, or, and};
 
 // Sum logic, (a XOR b) XOR Carry in, return bit (0 or 1) after logic.
-pub fn sum(a: u8, b: u8, cin: u8) -> u8{
+fn sum(a: u8, b: u8, cin: u8) -> u8{
     let sum = xor(xor(a, b), cin);
     
     sum
@@ -9,14 +9,14 @@ pub fn sum(a: u8, b: u8, cin: u8) -> u8{
 
 // Carry out logic, (a AND b) OR (Carry in AND (a XOR b)), 
 // returns bit (0 or 1) after logic.
-pub fn carry_out(a: u8, b: u8, cin: u8) -> u8 {
+fn carry_out(a: u8, b: u8, cin: u8) -> u8 {
     let cout = or(and(a, b), and(cin, xor(a, b)));
     
     cout
 }
 
 // 4 Bit Adder returning a 4 bit array + overflow confirmation.
-pub fn bit4addr(a: [u8; 4], b: [u8; 4]) -> ([u8; 4], u8) {
+fn bit4addr(a: [u8; 4], b: [u8; 4]) -> ([u8; 4], u8) {
     let mut return4bit = [0; 4];
     let mut carry = 0;
     
@@ -24,13 +24,6 @@ pub fn bit4addr(a: [u8; 4], b: [u8; 4]) -> ([u8; 4], u8) {
         let sum = sum(a[i], b[i], carry);
         carry = carry_out(a[i], b[i], carry);
         return4bit[i] = sum;
-    }
-
-    // Confirm if theres overflow at the (MSB).
-    if carry != 0 {
-        println!("Overflow detected");
-    } else {
-        println!("No overflow")
     }
 
     (return4bit, carry)

@@ -1,4 +1,4 @@
-pub fn mux(mut a: u8, mut b: u8, sel: u8) -> String {
+fn mux(a: u8, b: u8, sel: u8) -> String {
     // Check inputs: only bits (0/1) allowed.
     if a > 1 || b > 1 || sel > 1 {
         return "Error!! All inputs must be 0 or 1.".to_string();
@@ -10,7 +10,7 @@ pub fn mux(mut a: u8, mut b: u8, sel: u8) -> String {
     format!("(a: {a} b: {b} sel: {sel}) out: {out}")
 }
 
-pub fn demux(mut a: u8, mut b: u8, inp: u8, sel: u8) -> String {
+fn demux(a: u8, b: u8, inp: u8, sel: u8) -> String {
     // Check input: only bits (0/1) are allowed.
     if sel > 1 {
         return "Error!! All inputs must be 0 or 1.".to_string();
