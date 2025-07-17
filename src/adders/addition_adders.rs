@@ -1,11 +1,15 @@
-use crate::gates::basic::{xor, or, and};
+use crate::operators::addition::{sum, carry_out};
+
+fn half_adder(a: u8, b: u8, cin: u8) -> (u8, u8) {
+    (sum(a, b, cin), carry_out(a, b, cin))
+}
 
 // Full adder returning Sum and Carry out in boolean data-type.
 fn full_addr(a: u8, b: u8, cin: u8) -> (u8, u8) {
     // Sum logic -> a AND b = bit, then Bit AND Cin, is end Bit.
-    let sum = xor(xor(a, b), cin);
+    let sum = sum(a, b, cin);
     // Cout logic -> (a AND b = Bit), OR (a XOR b = Bit, AND Cin = Bit) = Bit.
-    let cout = or(and(a, b), and(cin, xor(a, b)));
+    let cout = carry_out(a, b, cin);
 
     // Return both values as owner.
     (sum, cout)
@@ -60,5 +64,10 @@ mod tests {
         let expected_sum = [1, 1, 1, 1, 1, 1, 1, 0];
         let expected_carry = 1;
         assert_eq!(eight_bit_full_addr(a, b), (expected_sum, expected_carry));
+    }
+
+    #[test]
+    fn applies_sum_carry_out_logic_and_returns_one_bit() {
+        assert_eq!(half_adder(1, 0, 1), (0, 1));
     }
 }
