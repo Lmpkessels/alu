@@ -1,9 +1,9 @@
 use crate::gates::basic::{not, and, or, xor};
 
-pub fn diff(a: u8, b: u8, bin: u8) -> u8 {
-    xor(xor(a, b), bin)
+pub fn difference_bit(bit_a: u8, bit_b: u8, borrow_in_bit: u8) -> u8 {
+    xor(xor(bit_a, bit_b), borrow_in_bit)
 }
 
-pub fn borrow_out(a: u8, b: u8, bin: u8) -> u8 {
-    or(and(not(a), b), and(not(xor(a, b)), bin))
+pub fn borrow_out_bit(bit_a: u8, bit_b: u8, borrow_in_bit: u8) -> u8 {
+    or(and(not(bit_a), bit_b), and(not(xor(bit_a, bit_b)), borrow_in_bit))
 }

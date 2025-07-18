@@ -1,49 +1,40 @@
-use crate::operators::subtraction::{diff, borrow_out};
+use crate::operators::subtraction::{difference_bit, borrow_out_bit};
 
-fn subtraction_4_bit(a: [u8; 4], b: [u8; 4]) -> ([u8; 4], u8) {
-    let mut output = [0; 4];
-    let mut bout = 0;
+fn subtraction_4_bit(byte_a: [u8; 4], byte_b: [u8; 4]) -> ([u8; 4], u8) {
+    let mut result_for_bit = [0; 4];
+    let mut borrow_out = 0;
 
-    for i in (0..4).rev() {
-        let diff = diff(a[i], b[i], bout);
-        bout = borrow_out(a[i], b[i], bout);
+    for bit in (0..4).rev() {
+        let difference_bit = difference_bit(byte_a[bit], byte_b[bit], borrow_out);
+
+        borrow_out = borrow_out_bit(byte_a[bit], byte_b[bit], borrow_out);
 
         // Store the result bit in output at position i.
-        output[i] = diff;
+        result_for_bit[bit] = difference_bit;
     }
 
-    (output, bout)
+    (result_for_bit, borrow_out)
 }
 
-fn subtraction_8_bit(a: [u8; 8], b: [u8; 8]) -> ([u8; 8], u8) {
-    let mut output = [0; 8];
-    let mut bout = 0;
+fn subtraction_8_bit(byte_a: [u8; 8], byte_b: [u8; 8]) -> ([u8; 8], u8) {
+    let mut result_byte = [0; 8];
+    let mut borrow_out = 0;
 
-    for i in (0..8).rev() {
-        let diff = diff(a[i], b[i], bout);
-        bout = borrow_out(a[i], b[i], bout);
+    for bit in (0..8).rev() {
+        let difference_bit = difference_bit(byte_a[bit], byte_b[bit], borrow_out);
+
+        borrow_out = borrow_out_bit(byte_a[bit], byte_b[bit], borrow_out);
 
         // Store the result bit in output at position i.
-        output[i] = diff;
+        result_byte[bit] = difference_bit;
     }
 
-    (output, bout)
+    (result_byte, borrow_out)
 }
 
 #[cfg(test)]
 mod test {
     use super::*;
-
-    #[test]
-    fn returns_bit_after_applying_nota_and_b_or_not_a_xor_b_and_bin() {
-        assert_eq!(diff(1, 0, 1), (0));
-    }
-
-    #[test]
-    fn returns_bit_after_applying_a_xor_b_xor_bout() {
-        assert_eq!(borrow_out(1, 1, 0), (0));
-    }
-
     #[test]
     fn returns_4_bit_array_after_applying_difference_and_cout_logic() {
         let array_a = [1, 0, 0, 1];

@@ -11,107 +11,107 @@ and returned by the function.
 
 // OR 8 Multi: applies OR logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-fn or8multi(inp: [[u8; 16]; 8]) -> [u8; 16] { 
-    let mut storage = [0; 16];
+fn or8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] { 
+    let mut word = [0; 16];
 
     // Loop through each bit index.
-    for i in 0..16 {
-        let mut result = 0;
+    for bit in 0..16 {
+        let mut result_bit = 0;
         // Get each nested array.
-        for a in 0..8 {
+        for index_array in 0..8 {
             // Apply OR logic bit-by-bit, index-by-index.
-            result |= inp[a][i];
+            result_bit |= input_array[index_array][bit];
         }
         // Store bit in storage.
-        storage[i] = result;
+        word[bit] = result_bit;
     }
 
     // Return storage.
-    storage
+    word
 }
 
 // AND 8 Multi: applies AND logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-fn and8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
-    let mut storage = [0; 16];
+fn and8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] {
+    let mut word = [0; 16];
 
     // Loop through each bit index.
-    for i in 0..16 {
-        let mut result = 1;
+    for bit in 0..16 {
+        let mut result_bit = 1;
         // Get each nested array.
-        for a in 0..8 {
+        for index_array in 0..8 {
             // Apply AND logic bit-by-bit, index-by-index.
-            result &= inp[a][i];
+            result_bit &= input_array[index_array][bit];
         }
         // Store bit in storage.
-        storage[i] = result;
+        word[bit] = result_bit;
     }
 
     // Return storage.
-    storage
+    word
 }
 
 // XOR 8 Multi: applies XOR logic bit-by-bit on all index 0, then 1, etc.  
 // Returns a vector of 16 bits.
-fn xor8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
-    let mut storage = [0; 16];
+fn xor8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] {
+    let mut word = [0; 16];
 
     // Loop through each bit index.
-    for i in 0..16 {
-        let mut result = 0;
+    for bit in 0..16 {
+        let mut result_bit = 0;
         // Get each nested array.
-        for a in 0..8 {
+        for index_array in 0..8 {
             // Apply XOR logic bit-by-bit, index-by-index.
-            result ^= inp[a][i];
+            result_bit ^= input_array[index_array][bit];
         }
-        storage[i] = result;
+        word[bit] = result_bit;
     }
 
     // Return storage.
-    storage
+    word
 }
 
 // NAND 8 Multi: applies NOT AND logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-fn nand8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
-    let mut storage = [0; 16];
+fn nand8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] {
+    let mut word = [0; 16];
 
     // Loop through each bit index.
-    for i in 0..16 {
-        let mut result = 1;
+    for bit in 0..16 {
+        let mut result_bit = 1;
         // Get each nested array.
-        for a in 0..8 {
+        for index_array in 0..8 {
             // Apply AND logic bit-by-bit, index-by-index.
-            result &= inp[a][i];
+            result_bit &= input_array[index_array][bit];
         }
         // Apply NOT to the result and mask to keep only the last bit.
-        result = !result & 1;
-        storage[i] = result;
+        result_bit = !result_bit & 1;
+        word[bit] = result_bit;
     }
 
     // Return storage.
-    storage
+    word
 }
 
 // NOR 8 Multi: applies NOT OR logic bit-by-bit on all index 0, then 1, etc. 
 // Returns a vector of 16 bits.
-fn nor8multi(inp: [[u8; 16]; 8]) -> [u8; 16] {
-    let mut storage = [0; 16];
+fn nor8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] {
+    let mut word = [0; 16];
 
     // Loop through each bit index.
-    for i in 0..16 {
-        let mut result = 0;
+    for bit in 0..16 {
+        let mut result_bit = 0;
         // Get each nested array.
-        for a in 0..8 {
+        for index_array in 0..8 {
             // Apply OR logic bit-by-bit, index-by-index.
-            result |= inp[a][i];
+            result_bit |= input_array[index_array][bit];
         }
         // Apply NOT to the result and mask to keep only the last bit.
-        result = !result & 1;
-        storage[i] = result;
+        result_bit = !result_bit & 1;
+        word[bit] = result_bit;
     }
     
-    storage
+    word
 }
 
 #[cfg(test)]

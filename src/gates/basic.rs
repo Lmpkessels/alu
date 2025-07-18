@@ -8,8 +8,8 @@ a   NOT(a)
 0     1
 1     0
 */
-pub fn not(a: u8) -> u8 {
-    nand(a, a)
+pub fn not(bit_a: u8) -> u8 {
+    nand(bit_a, bit_a) & 1
 }
 
 /*
@@ -24,8 +24,8 @@ a   b   AND(a, b)
 1   0       0
 1   1       1
 */
-pub fn and(a: u8, b: u8) -> u8 {
-(a & b) & 1
+pub fn and(bit_a: u8, bit_b: u8) -> u8 {
+(bit_a & bit_b) & 1
 }
 
 /*
@@ -40,8 +40,8 @@ a   b   OR(a, b)
 1   0       1
 1   1       1
 */
-pub fn or(a: u8, b: u8) -> u8 {
-    (a | b) & 1
+pub fn or(bit_a: u8, bit_b: u8) -> u8 {
+    (bit_a | bit_b) & 1
 }
 
 
@@ -57,8 +57,8 @@ a   b   XOR(a, b)
 1   0       1
 1   1       0
 */
-pub fn xor(a: u8, b: u8) -> u8 {
-    or(and(a, not(b)), and(not(a), b))
+pub fn xor(bit_a: u8, bit_b: u8) -> u8 {
+    or(and(bit_a, not(bit_b)), and(not(bit_a), bit_b))
 }
 
 /*
@@ -74,8 +74,8 @@ a   b   AND(a, b)   NAND(a, b)
 1   0       0           1
 1   1       1           0
 */
-pub fn nand(a: u8, b: u8) -> u8 {
-    !(a & b) & 1
+pub fn nand(bit_a: u8, bit_b: u8) -> u8 {
+    !(bit_a & bit_b) & 1
 }
 
 /*
@@ -91,8 +91,8 @@ a   b   OR(a, b)   NOR(a, b)
 1   0       1           0
 1   1       1           0
 */
-pub fn nor(a: u8, b: u8) -> u8 {
-    not(or(a, b))
+pub fn nor(bit_a: u8, bit_b: u8) -> u8 {
+    not(or(bit_a, bit_b)) & 1
 }
 
 /*
@@ -108,8 +108,8 @@ a   b   XOR(a, b)   XNOR(a, b)
 1   0       1           0
 1   1       0           1
 */
-pub fn xnor(a: u8, b: u8) -> u8 {
-    not(xor(a, b))
+pub fn xnor(bit_a: u8, bit_b: u8) -> u8 {
+    not(xor(bit_a, bit_b)) & 1
 }
 
 #[cfg(test)]

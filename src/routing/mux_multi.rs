@@ -12,45 +12,45 @@ The function returns an array of 8 bits when a match is found.
 */
 
 // 8-WAY MULTIPLEXER: selects and returns one of 8 arrays based on selector.
-fn mux8way(inp: &[[u8; 8]; 8], sel: u8) -> [u8; 8] {
+fn mux8way(input: &[[u8; 8]; 8], selector: u8) -> [u8; 8] {
     // Logic: if selector is 0, return A. If 1, return B. Etc.
-    if sel == 0 {
-        let a = inp[0];
+    if selector == 0 {
+        let a = input[0];
         println!("A: {a:?}");
         return a;
     }
-    if sel == 1 {
-        let b = inp[1];
+    if selector == 1 {
+        let b = input[1];
         println!("B: {b:?}");
         return b;
     }
-    if sel == 2 {
-        let c = inp[2];
+    if selector == 2 {
+        let c = input[2];
         println!("C: {c:?}");
         return c;
     }
-    if sel == 3 {
-        let d = inp[3];
+    if selector == 3 {
+        let d = input[3];
         println!("D: {d:?}");
         return d;
     }
-    if sel == 4 {
-        let e = inp[4];
+    if selector == 4 {
+        let e = input[4];
         println!("E: {e:?}");
         return e;
     }
-    if sel == 5 {
-        let f = inp[5];
+    if selector == 5 {
+        let f = input[5];
         println!("F: {f:?}");
         return f;
     }
-    if sel == 6 {
-        let g = inp[6];
+    if selector == 6 {
+        let g = input[6];
         println!("G: {g:?}");
         return g;
     }
-    if sel == 7 {
-        let h = inp[7];
+    if selector == 7 {
+        let h = input[7];
         println!("H: {h:?}");
         return h;
     }
@@ -65,62 +65,62 @@ mod test {
 
     #[test]
     fn returns_correct_array_for_each_selector() {
-        let a0 = [1, 0, 1, 1, 0, 1, 0, 1];
-        let a1 = [1, 0, 0, 1, 0, 0, 1, 1];
-        let a2 = [1, 1, 1, 1, 1, 1, 1, 1];
-        let a3 = [0, 1, 0, 1, 0, 1, 0, 1];
-        let a4 = [1, 0, 1, 1, 0, 1, 0, 1];
-        let a5 = [1, 0, 0, 1, 0, 0, 1, 1];
-        let a6 = [1, 1, 1, 1, 1, 1, 1, 1];
-        let a7 = [0, 1, 0, 1, 0, 1, 0, 1];
+        let array0 = [1, 0, 1, 1, 0, 1, 0, 1];
+        let array1 = [1, 0, 0, 1, 0, 0, 1, 1];
+        let array2 = [1, 1, 1, 1, 1, 1, 1, 1];
+        let array3 = [0, 1, 0, 1, 0, 1, 0, 1];
+        let array4 = [1, 0, 1, 1, 0, 1, 0, 1];
+        let array5 = [1, 0, 0, 1, 0, 0, 1, 1];
+        let array6 = [1, 1, 1, 1, 1, 1, 1, 1];
+        let array7 = [0, 1, 0, 1, 0, 1, 0, 1];
 
-        let inp = [
-            a0,
-            a1,
-            a2,
-            a3,
-            a4,
-            a5,
-            a6,
-            a7,
+        let input = [
+            array0,
+            array1,
+            array2,
+            array3,
+            array4,
+            array5,
+            array6,
+            array7,
         ];
 
-        let sel = 0;
-        let expected = a0;
+        let selector = 0;
+        let expected = array0;
 
-        assert_eq!(mux8way(&inp, sel), (expected));
+        assert_eq!(mux8way(&input, selector), (expected));
 
-        let sel = 1;
-        let expected = a1;
+        let selector = 1;
+        let expected = array1;
 
-        assert_eq!(mux8way(&inp, sel), (expected));
+        assert_eq!(mux8way(&input, selector), (expected));
 
-        let sel = 2;
-        let expected = a2;
+        let selector = 2;
+        let expected = array2;
 
-        assert_eq!(mux8way(&inp, sel), (expected));
+        assert_eq!(mux8way(&input, selector), (expected));
 
-        let sel = 3;
-        let expected = a3;
+        let selector = 3;
+        let expected = array3;
 
-        assert_eq!(mux8way(&inp, sel), (expected));
+        assert_eq!(mux8way(&input, selector), (expected));
 
-        let sel = 4;
-        let expected = a4;
+        let selector = 4;
+        let expected = array4;
 
-        assert_eq!(mux8way(&inp, sel), (expected));
+        assert_eq!(mux8way(&input, selector), (expected));
 
-        let sel = 5;
-        let expected = a5;
+        let selector = 5;
+        let expected = array5;
 
-        assert_eq!(mux8way(&inp, sel), (expected));
+        assert_eq!(mux8way(&input, selector), (expected));
 
-        let sel = 6;
-        let expected = a6;
-        assert_eq!(mux8way(&inp, sel), (expected));
+        let selector = 6;
+        let expected = array6;
+        assert_eq!(mux8way(&input, selector), (expected));
 
-        let sel = 7;
-        let expected = a7;
-        assert_eq!(mux8way(&inp, sel), (expected));
+        let selector = 7;
+        let expected = array7;
+        assert_eq!(mux8way(&input, selector), (expected));
     }
 }

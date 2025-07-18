@@ -1,40 +1,27 @@
-use crate::operators::addition::{sum, carry_out};
+use crate::operators::addition::{sum_bit, carry_out_bit};
 
-fn half_adder(a: u8, b: u8, cin: u8) -> (u8, u8) {
-    (sum(a, b, cin), carry_out(a, b, cin))
-}
-
-// Full adder returning Sum and Carry out in boolean data-type.
-fn full_addr(a: u8, b: u8, cin: u8) -> (u8, u8) {
-    // Sum logic -> a AND b = bit, then Bit AND Cin, is end Bit.
-    let sum = sum(a, b, cin);
-    // Cout logic -> (a AND b = Bit), OR (a XOR b = Bit, AND Cin = Bit) = Bit.
-    let cout = carry_out(a, b, cin);
-
-    // Return both values as owner.
-    (sum, cout)
+fn one_bit_full_adder(bit_a: u8, bit_b: u8, carry_in_bit: u8) -> (u8, u8) {
+    (sum_bit(bit_a, bit_b, carry_in_bit), carry_out_bit(bit_a, bit_b, carry_in_bit))
 }
 
 // eight bit full adder, receiving as argument two arrays.
 // Fn returns a array with 8 boolean expressions + overflow.
-fn eight_bit_full_addr(a: [u8; 8], b: [u8; 8]) -> ([u8; 8], u8) {
-    // Array, boolean expression false by default, array range 8.
-    let mut total = [0; 8];
+fn eight_bit_full_adder(byte_a: [u8; 8], byte_b: [u8; 8]) -> ([u8; 8], u8) {
+    let mut result_byte = [0; 8];
     // Carry out, by default false.
-    let mut cout = 0;
+    let mut carry_out_bit = 0;
 
     // Get (i) in range 0..8. Then reverse to start at righ-most-bit (lsb).
-    for i in (0..8).rev() {
+    for bit in (0..8).rev() {
         // Function creating a total then assigning it to sum and cin.
-        let (addr, overflow) = full_addr(a[i], b[i], cout);
+        let (sum_bit, carry_in_bit) = one_bit_full_adder(byte_a[bit], byte_b[bit], carry_out_bit);
         // Implement addr in total[i].
-        total[i] = addr;
+        result_byte[bit] = sum_bit;
         // Carry out is overflow.
-        cout = overflow;
+        carry_out_bit = carry_in_bit;
     }
 
-    // Return array and carry out(overflow in this case).
-    (total, cout)
+    (result_byte, carry_out_bit)
 }
 
 #[cfg(test)]
@@ -43,31 +30,29 @@ mod tests {
 
     #[test]
     fn one_bit_adder_returns_correct_sum_and_carry() {
-        assert_eq!(full_addr(0, 0, 0), (0, 0));
-        assert_eq!(full_addr(0, 1, 0), (1, 0));
-        assert_eq!(full_addr(1, 0, 1), (0, 1));
-        assert_eq!(full_addr(1, 1, 1), (1, 1));
+        assert_eq!(one_bit_full_adder(0, 0, 0), (0, 0));
+        assert_eq!(one_bit_full_adder(0, 1, 0), (1, 0));
+        assert_eq!(one_bit_full_adder(1, 0, 1), (0, 1));
+        assert_eq!(one_bit_full_adder(1, 1, 1), (1, 1));
     }
 
     #[test]
     fn eight_bit_adder_correctly_adds_without_overflow() {
-        let a = [0, 1, 1, 0, 1, 0, 1, 0];
-        let b = [1, 0, 1, 0, 1, 0, 1, 0];
+        let bit_a = [0, 1, 1, 0, 1, 0, 1, 0];
+        let bit_b = [1, 0, 1, 0, 1, 0, 1, 0];
         let expected = ([0, 0, 0, 1, 0, 1, 0, 0], 1);
-        assert_eq!(eight_bit_full_addr(a, b), (expected));
+        
+        assert_eq!(eight_bit_full_adder(bit_a, bit_b), (expected));
     }
 
     #[test]
     fn eight_bit_adder_handles_full_overflow() {
-        let a = [1; 8];
-        let b = [1; 8];
-        let expected_sum = [1, 1, 1, 1, 1, 1, 1, 0];
-        let expected_carry = 1;
-        assert_eq!(eight_bit_full_addr(a, b), (expected_sum, expected_carry));
-    }
+        let byte_a = [1; 8];
+        let byte_b = [1; 8];
+        let expected_sum_byte = [1, 1, 1, 1, 1, 1, 1, 0];
+        let expected_carry_out_bit = 1;
 
-    #[test]
-    fn applies_sum_carry_out_logic_and_returns_one_bit() {
-        assert_eq!(half_adder(1, 0, 1), (0, 1));
+        assert_eq!(eight_bit_full_adder(byte_a, byte_b), 
+        (expected_sum_byte, expected_carry_out_bit));
     }
 }

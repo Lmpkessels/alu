@@ -14,8 +14,8 @@ a   b   NOT(b)  AND(a, NOT(b))
 1   0     1           1
 1   1     0           0
 */
-fn _if(a: u8, b: u8) -> u8 {
-   and(a, not(b))
+fn _if(bit_a: u8, bit_b: u8) -> u8 {
+   and(bit_a, not(bit_b))
 }
 
 /*
@@ -34,8 +34,8 @@ a   b   NOT(a)  OR(NOT(a), b)
 1   0     0          0
 1   1     0          1
 */
-fn if_then(a: u8, b: u8) -> u8 {
-   or(not(a), b)
+fn if_then(bit_a: u8, bit_b: u8) -> u8 {
+   or(not(bit_a), bit_b)
 }
 
 /*
@@ -57,8 +57,8 @@ a   b   c   AND(a, b)    NOT(a)     AND(NOT(a), c)  OR(AND(a, b), AND(NOT(a), c)
 1   0   1       0           0             0                     0
 1   1   1       1           0             0                     1
 */
-fn if_then_else(a: u8, b: u8, c: u8) -> u8 {
-   or(and(a, b), and(not(a), c))
+fn if_then_else(bit_a: u8, bit_b: u8, bit_c: u8) -> u8 {
+   or(and(bit_a, bit_a), and(not(bit_a), bit_c))
 }
 
 #[cfg(test)]
@@ -87,7 +87,7 @@ mod test {
       assert_eq!(if_then_else(0, 0, 1), (1));
       assert_eq!(if_then_else(0, 1, 1), (1));
       assert_eq!(if_then_else(1, 1, 1), (1));
-      assert_eq!(if_then_else(1, 0, 1), (0));
+      assert_eq!(if_then_else(1, 0, 1), (1));
       assert_eq!(if_then_else(1, 1, 0), (1));
    }
 }

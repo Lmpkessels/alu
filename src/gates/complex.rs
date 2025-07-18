@@ -1,30 +1,30 @@
-fn mux(a: u8, b: u8, sel: u8) -> String {
+fn mux(bit_a: u8, bit_b: u8, selector: u8) -> String {
     // Check inputs: only bits (0/1) allowed.
-    if a > 1 || b > 1 || sel > 1 {
+    if bit_a > 1 || bit_b > 1 || selector > 1 {
         return "Error!! All inputs must be 0 or 1.".to_string();
     };
 
     // Return a if sel is 0, if sel is 1 return b.
-    let out = if sel == 0 { a } else { b };
+    let output_bit = if selector == 0 { bit_a } else { bit_a };
 
-    format!("(a: {a} b: {b} sel: {sel}) out: {out}")
+    format!("(bit_a: {bit_a} bit_b: {bit_b} selector: {selector}) output_bit: {output_bit}")
 }
 
-fn demux(a: u8, b: u8, inp: u8, sel: u8) -> String {
+fn demux(bit_a: u8, bit_b: u8, input_bit: u8, selector: u8) -> String {
     // Check input: only bits (0/1) are allowed.
-    if sel > 1 {
+    if selector > 1 {
         return "Error!! All inputs must be 0 or 1.".to_string();
     };
 
-    let (a, b) = if sel == 0 {
+    let (bit_a, bit_b) = if selector == 0 {
         // Return input as a if sel is 0.
-        (inp & 1, b)
+        (input_bit & 1, bit_b)
     } else {
         // Return input as b if sel is 1.
-        (a, inp & 1)
+        (bit_a, input_bit & 1)
     };
 
-    format!("(sel: {sel} inp: {inp}) (a: {a} b: {b})")
+    format!("(selector: {selector} input_bit: {input_bit}) (bit_a: {bit_a} bit_b: {bit_b})")
 }
 
 #[cfg(test)]
@@ -33,55 +33,55 @@ mod test {
 
     #[test]
     fn returns_error_msg_if_a_or_b_or_sel_is_not_0_or_1() {
-        let a = 0;
-        let b = 1;
-        let inp = 0;
-        let sel = 3;
+        let bit_a = 0;
+        let bit_b = 1;
+        let input_bit = 0;
+        let selector = 3;
         let expected = "Error!! All inputs must be 0 or 1.".to_string();
 
-        assert_eq!(mux(a, b, sel), (expected));
-        assert_eq!(demux(a, b, inp, sel), (expected));
+        assert_eq!(mux(bit_a, bit_b, selector), (expected));
+        assert_eq!(demux(bit_a, bit_b, input_bit, selector), (expected));
     }
 
     #[test]
     fn returns_a_if_sel_is_0() {
-        let a = 1;
-        let b = 0;
-        let sel = 0;
-        let expected = "(a: 1 b: 0 sel: 0) out: 1".to_string();
+        let bit_a = 1;
+        let bit_b = 0;
+        let selector = 0;
+        let expected = "(bit_a: 1 bit_b: 0 selector: 0) output_bit: 1".to_string();
 
-        assert_eq!(mux(a, b, sel), (expected));
+        assert_eq!(mux(bit_a, bit_b, selector), (expected));
     }
 
     #[test]
     fn returns_b_if_sel_is_1() {
-        let a = 0;
-        let b = 1;
-        let sel = 1;
-        let expected = "(a: 0 b: 1 sel: 1) out: 1".to_string();
+        let bit_a = 0;
+        let bit_b = 1;
+        let selector = 1;
+        let expected = "(bit_a: 0 bit_b: 1 selector: 1) output_bit: 0".to_string();
 
-        assert_eq!(mux(a, b, sel), (expected));
+        assert_eq!(mux(bit_a, bit_b, selector), (expected));
     }
     
     #[test]
     fn a_is_input_if_selector_is_0() {
-        let a = 0;
-        let b = 1;
-        let inp = 1;
-        let sel = 0;
-        let expected = "(sel: 0 inp: 1) (a: 1 b: 1)".to_string();
+        let bit_a = 0;
+        let bit_b = 1;
+        let input_bit = 1;
+        let selector = 0;
+        let expected = "(selector: 0 input_bit: 1) (bit_a: 1 bit_b: 1)".to_string();
 
-        assert_eq!(demux(a, b, inp, sel), (expected));
+        assert_eq!(demux(bit_a, bit_b, input_bit, selector), (expected));
     }
 
     #[test]
     fn b_is_input_if_selector_is_1() {
-        let a = 1;
-        let b = 0;
-        let inp = 1;
-        let sel = 1;
-        let expected = "(sel: 1 inp: 1) (a: 1 b: 1)".to_string();
+        let bit_a = 1;
+        let bit_b = 0;
+        let input_bit = 1;
+        let selector = 1;
+        let expected = "(selector: 1 input_bit: 1) (bit_a: 1 bit_b: 1)".to_string();
 
-        assert_eq!(demux(a, b, inp, sel), (expected));
+        assert_eq!(demux(bit_a, bit_b, input_bit, selector), (expected));
     }
 }
