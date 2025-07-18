@@ -1,9 +1,13 @@
 use crate::gates::basic::{and, or, xor};
 
+// Returns sum bit after applying XOR logic bit-by-bit on,
+// bit_a, b, c and carry in bit.
 fn sum_bit(bit_a: u8, bit_b: u8, bit_c: u8, carry_in_bit: u8) -> u8 {
     xor(xor(xor(bit_a, bit_b), bit_c), carry_in_bit)
 }
 
+// Returns carry out bit after applying AND, and OR logic bit-by-bit on,
+// bit_a, b, c and carry in bit.
 fn carry_out_bit(bit_a: u8, bit_b: u8, bit_c: u8, carry_in_bit: u8) -> u8 {
     or(
         or(
@@ -20,6 +24,9 @@ fn carry_out_bit(bit_a: u8, bit_b: u8, bit_c: u8, carry_in_bit: u8) -> u8 {
     )
 }
 
+
+// Returns one byte and overflow if true, after applying sum and carry out logic 
+// bit-by-bit on byte_a, b and c.
 fn full_adder_3input_8bit(byte_a: [u8; 8], byte_b: [u8; 8], byte_c: [u8; 8]) -> 
 ([u8; 8], u8) {
 
