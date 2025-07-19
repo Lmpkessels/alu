@@ -1,6 +1,10 @@
 use crate::operators::addition::{sum_bit, carry_out_bit};
 
-fn one_bit_full_adder(bit_a: u8, bit_b: u8, carry_in_bit: u8) -> (u8, u8) {
+pub fn one_bit_full_adder_sum(bit_a: u8, bit_b: u8, carry_in_bit: u8) -> u8 {
+    sum_bit(bit_a, bit_b, carry_in_bit)
+}
+
+pub fn one_bit_full_adder(bit_a: u8, bit_b: u8, carry_in_bit: u8) -> (u8, u8) {
     (sum_bit(bit_a, bit_b, carry_in_bit), carry_out_bit(bit_a, bit_b, carry_in_bit))
 }
 

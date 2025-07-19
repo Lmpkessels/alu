@@ -1,4 +1,4 @@
-fn mux(bit_a: u8, bit_b: u8, selector: u8) -> String {
+pub fn mux(bit_a: u8, bit_b: u8, selector: u8) -> String {
     // Check inputs: only bits (0/1) allowed.
     if bit_a > 1 || bit_b > 1 || selector > 1 {
         return "Error!! All inputs must be 0 or 1.".to_string();
@@ -10,7 +10,7 @@ fn mux(bit_a: u8, bit_b: u8, selector: u8) -> String {
     format!("(bit_a: {bit_a} bit_b: {bit_b} selector: {selector}) output_bit: {output_bit}")
 }
 
-fn demux(bit_a: u8, bit_b: u8, input_bit: u8, selector: u8) -> String {
+pub fn demux(bit_a: u8, bit_b: u8, input_bit: u8, selector: u8) -> String {
     // Check input: only bits (0/1) are allowed.
     if selector > 1 {
         return "Error!! All inputs must be 0 or 1.".to_string();

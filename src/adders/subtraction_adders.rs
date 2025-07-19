@@ -1,5 +1,13 @@
 use crate::operators::subtraction::{difference_bit, borrow_out_bit};
 
+pub fn subtraction_1_bit_diff(a: u8, b: u8, borrow_out: u8) -> u8 {
+    difference_bit(a, b, borrow_out)
+}
+
+pub fn subtraction_1_bit(a: u8, b: u8, borrow_out: u8) -> (u8, u8) {
+    (difference_bit(a, b, borrow_out), borrow_out_bit(a, b, borrow_out))
+}
+
 fn subtraction_4_bit(byte_a: [u8; 4], byte_b: [u8; 4]) -> ([u8; 4], u8) {
     let mut result_for_bit = [0; 4];
     let mut borrow_out = 0;
