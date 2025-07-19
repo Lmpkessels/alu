@@ -2,6 +2,8 @@ use crate::adders::addition_adders::{one_bit_full_adder_sum};
 use crate::adders::subtraction_adders::{subtraction_1_bit_diff};
 use crate::gates::basic::{and, or, xor, not};
 
+// 1-Bit ALU, that matches the 6-bit pattern and chooses the function for 
+// Performing the task.
 fn alu(
     control_pattern: [u8; 6], 
     bit_a: u8, 
