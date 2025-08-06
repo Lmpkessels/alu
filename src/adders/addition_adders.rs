@@ -1,27 +1,21 @@
 use crate::operators::addition::{sum_bit, carry_out_bit};
 
-pub fn one_bit_full_adder_sum(bit_a: u8, bit_b: u8, carry_in_bit: u8) -> u8 {
-    sum_bit(bit_a, bit_b, carry_in_bit)
-}
-
 pub fn one_bit_full_adder(bit_a: u8, bit_b: u8, carry_in_bit: u8) -> (u8, u8) {
     (sum_bit(bit_a, bit_b, carry_in_bit), carry_out_bit(bit_a, bit_b, carry_in_bit))
 }
 
 // eight bit full adder, receiving as argument two arrays.
-// Fn returns a array with 8 boolean expressions + overflow.
-fn eight_bit_full_adder(byte_a: [u8; 8], byte_b: [u8; 8]) -> ([u8; 8], u8) {
+// Fn returns a byte + overflow.
+pub fn eight_bit_full_adder(byte_a: [u8; 8], byte_b: [u8; 8]) -> ([u8; 8], u8) {
     let mut result_byte = [0; 8];
-    // Carry out, by default false.
     let mut carry_out_bit = 0;
 
-    // Get (i) in range 0..8. Then reverse to start at righ-most-bit (lsb).
     for bit in (0..8).rev() {
-        // Function creating a total then assigning it to sum and cin.
-        let (sum_bit, carry_in_bit) = one_bit_full_adder(byte_a[bit], byte_b[bit], carry_out_bit);
-        // Implement addr in total[i].
+        let (sum_bit, carry_in_bit) = one_bit_full_adder(byte_a[bit], byte_b[bit], 
+            carry_out_bit);
+
         result_byte[bit] = sum_bit;
-        // Carry out is overflow.
+        
         carry_out_bit = carry_in_bit;
     }
 

@@ -4,12 +4,12 @@
 The selector (`sel: u8`) receives a number from 0..=3, based on that,
 an active slot is selected, all other slots remain zeroed.
 
-Else, an error message is raised.
+If outside of range, an error message is raised.
 
 Input (inp: [u8; 8]) == declared as the active slot.
 */
 fn dmux4way(active_slot: [u8; 8], selector: u8) -> [[u8; 8]; 4] {
-    // If selector == 0 first slot is active.
+
     if selector == 0 {
         let array = [
             active_slot,
@@ -20,7 +20,7 @@ fn dmux4way(active_slot: [u8; 8], selector: u8) -> [[u8; 8]; 4] {
         println!("{array:?}");
         return array;
     }
-    // If selector == 1 second slot is active.
+
     if selector == 1 {
         let array = [
             [0; 8],
@@ -31,7 +31,7 @@ fn dmux4way(active_slot: [u8; 8], selector: u8) -> [[u8; 8]; 4] {
         println!("{array:?}");
         return array;
     }
-    // If selector == 2 third slot is active.
+    
     if selector == 2 {
         let array = [
             [0; 8], 
@@ -42,7 +42,7 @@ fn dmux4way(active_slot: [u8; 8], selector: u8) -> [[u8; 8]; 4] {
         println!("{array:?}");
         return array;
     }
-    // If selector == 3 forth slot is active.
+
     if selector == 3 {
         let array = [
             [0; 8], 
@@ -54,7 +54,6 @@ fn dmux4way(active_slot: [u8; 8], selector: u8) -> [[u8; 8]; 4] {
         return array;
     }
 
-    // Handle invalid selector input.
     panic!("Invalid! selector: must be 0-3");
 }
 

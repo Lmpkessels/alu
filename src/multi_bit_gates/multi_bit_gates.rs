@@ -1,15 +1,12 @@
 // Multi 16 bit NOT gate flips each 'bit' in the array.
 // ex. logic: a = 1, (NOT(a)) = 0.
 fn not16(input_word: [u8; 16]) -> [u8; 16] {
-    // Default set values.
     let mut output_word = [0; 16];
 
     for bit in 0..16 {
-        // Use NOT logic on bit values in array.
         output_word[bit] = (!input_word[bit]) & 1;
     } 
 
-    // Return array of 16 boolean values.
     output_word
 }
 
@@ -18,16 +15,12 @@ fn not16(input_word: [u8; 16]) -> [u8; 16] {
 // Returns one array after using AND gate.
 // ex. logic: a = 1, b = 0, (a AND b) = 0.
 fn and16(word_a: [u8; 16], word_b: [u8; 16]) -> [u8; 16] {
-    // Default set values.
     let mut output_word = [0; 16];
 
     for bit in 0..16 {
-        // Use AND logic on bit-by-bit throug arrays.
-        output_word[bit] = (word_a[bit] & word_b[bit]) & 1;
-        
+        output_word[bit] = (word_a[bit] & word_b[bit]) & 1;        
     }
 
-    // Return array of 16 boolean values.
     output_word
 }
 
@@ -36,15 +29,12 @@ fn and16(word_a: [u8; 16], word_b: [u8; 16]) -> [u8; 16] {
 // Returns one array after using OR gate.
 // ex. logic: a = 1, b = 0, (a OR b) = 1.
 fn or16(word_a: [u8; 16], word_b: [u8; 16]) -> [u8; 16] {
-    // Default set values.
     let mut output_word = [0; 16];
 
     for bit in 0..16 {
-        // Use OR logic bit-by-bit through arrays.
         output_word[bit] = (word_a[bit] | word_b[bit]) & 1;        
     }
 
-    // Return array of 16 boolean values.
     output_word
 }
 
@@ -53,21 +43,16 @@ fn or16(word_a: [u8; 16], word_b: [u8; 16]) -> [u8; 16] {
 // Checks if selector 'sel' is 'true' if so returns array 'b' else 'a'.
 // ex. logic: inp_a = 1, inp_b = 0, sel = 0 (Output = 1)
 fn mux16(word_a: [u8; 16], word_b: [u8; 16], selector: bool) -> [u8; 16] {
-    // Default set values.
     let mut output_word = [0; 16];
 
     for bit in 0..16 {
-        // If sel is true.
         output_word[bit] = if selector  {
-            // Output is input b.
             word_b[bit]
         } else {
-            // Output is input a.
             word_a[bit]
         };
     }
 
-    // Return array of 16 boolean values.
     output_word
 }
 

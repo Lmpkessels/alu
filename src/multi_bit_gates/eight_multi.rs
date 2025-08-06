@@ -9,104 +9,96 @@ Each value returned after the logic operation is pushed into a vector
 and returned by the function.
 */
 
-// OR 8 Multi: applies OR logic bit-by-bit on all index 0, then 1, etc. 
+// OR 8 Multi: applies OR logic bit-by-bit on all index position starting from 
+// 0, then 1, 2, etc. 
 // Returns a vector of 16 bits.
 fn or8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] { 
     let mut word = [0; 16];
 
-    // Loop through each bit index.
     for bit in 0..16 {
         let mut result_bit = 0;
-        // Get each nested array.
+
         for index_array in 0..8 {
-            // Apply OR logic bit-by-bit, index-by-index.
             result_bit |= input_array[index_array][bit];
         }
-        // Store bit in storage.
+
         word[bit] = result_bit;
     }
 
-    // Return storage.
     word
 }
 
-// AND 8 Multi: applies AND logic bit-by-bit on all index 0, then 1, etc. 
+// AND 8 Multi: applies AND logic bit-by-bit on all index position starting from,
+// 0, then 1, 2, etc. 
 // Returns a vector of 16 bits.
 fn and8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] {
     let mut word = [0; 16];
 
-    // Loop through each bit index.
     for bit in 0..16 {
         let mut result_bit = 1;
-        // Get each nested array.
+
         for index_array in 0..8 {
-            // Apply AND logic bit-by-bit, index-by-index.
             result_bit &= input_array[index_array][bit];
         }
-        // Store bit in storage.
+
         word[bit] = result_bit;
     }
 
-    // Return storage.
     word
 }
 
-// XOR 8 Multi: applies XOR logic bit-by-bit on all index 0, then 1, etc.  
+// XOR 8 Multi: applies XOR logic bit-by-bit on all index position starting from,
+// 0, then 1, 2, etc.
 // Returns a vector of 16 bits.
 fn xor8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] {
     let mut word = [0; 16];
 
-    // Loop through each bit index.
     for bit in 0..16 {
         let mut result_bit = 0;
-        // Get each nested array.
+        
         for index_array in 0..8 {
-            // Apply XOR logic bit-by-bit, index-by-index.
             result_bit ^= input_array[index_array][bit];
         }
+
         word[bit] = result_bit;
     }
 
-    // Return storage.
     word
 }
 
-// NAND 8 Multi: applies NOT AND logic bit-by-bit on all index 0, then 1, etc. 
+// NAND 8 Multi: applies NAND logic bit-by-bit on all index position starting from,
+// 0, then 1, 2, etc. 
 // Returns a vector of 16 bits.
 fn nand8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] {
     let mut word = [0; 16];
 
-    // Loop through each bit index.
     for bit in 0..16 {
         let mut result_bit = 1;
-        // Get each nested array.
-        for index_array in 0..8 {
-            // Apply AND logic bit-by-bit, index-by-index.
+
+        for index_array in 0..8 {               
             result_bit &= input_array[index_array][bit];
         }
-        // Apply NOT to the result and mask to keep only the last bit.
+
         result_bit = !result_bit & 1;
         word[bit] = result_bit;
     }
 
-    // Return storage.
     word
 }
 
-// NOR 8 Multi: applies NOT OR logic bit-by-bit on all index 0, then 1, etc. 
+// NOR 8 Multi: applies NOR logic bit-by-bit on all index position starting from,
+// 0, then 1, 2, etc. 
 // Returns a vector of 16 bits.
 fn nor8multi(input_array: [[u8; 16]; 8]) -> [u8; 16] {
     let mut word = [0; 16];
 
-    // Loop through each bit index.
     for bit in 0..16 {
         let mut result_bit = 0;
-        // Get each nested array.
+
         for index_array in 0..8 {
-            // Apply OR logic bit-by-bit, index-by-index.
             result_bit |= input_array[index_array][bit];
         }
-        // Apply NOT to the result and mask to keep only the last bit.
+        
         result_bit = !result_bit & 1;
         word[bit] = result_bit;
     }
