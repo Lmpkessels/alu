@@ -8,14 +8,14 @@ If outside of range, an error message is raised.
 
 Input (inp: [u8; 8]) == declared as the active slot.
 */
-fn dmux4way(active_slot: [u8; 8], selector: u8) -> [[u8; 8]; 4] {
+fn dmux4way(active_slot: [u8; 32], selector: u8) -> [[u8; 32]; 4] {
 
     if selector == 0 {
         let array = [
             active_slot,
-            [0; 8], 
-            [0; 8], 
-            [0; 8],
+            [0; 32], 
+            [0; 32], 
+            [0; 32],
         ];
         println!("{array:?}");
         return array;
@@ -23,10 +23,10 @@ fn dmux4way(active_slot: [u8; 8], selector: u8) -> [[u8; 8]; 4] {
 
     if selector == 1 {
         let array = [
-            [0; 8],
+            [0; 32],
             active_slot, 
-            [0; 8],
-            [0; 8],
+            [0; 32],
+            [0; 32],
         ];
         println!("{array:?}");
         return array;
@@ -34,10 +34,10 @@ fn dmux4way(active_slot: [u8; 8], selector: u8) -> [[u8; 8]; 4] {
     
     if selector == 2 {
         let array = [
-            [0; 8], 
-            [0; 8], 
+            [0; 32], 
+            [0; 32], 
             active_slot, 
-            [0; 8],
+            [0; 32],
         ];
         println!("{array:?}");
         return array;
@@ -45,9 +45,9 @@ fn dmux4way(active_slot: [u8; 8], selector: u8) -> [[u8; 8]; 4] {
 
     if selector == 3 {
         let array = [
-            [0; 8], 
-            [0; 8], 
-            [0; 8], 
+            [0; 32], 
+            [0; 32], 
+            [0; 32], 
             active_slot,
         ];
         println!("{array:?}");
@@ -63,13 +63,14 @@ mod test {
 
     #[test]
     fn if_sel_is_0_then_it_should_return_only_the_first_slot_active() {
-        let active_slot = [0, 1, 0, 0, 1, 1, 0, 1];
+        let active_slot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1];
         let selector = 0;
         let expected = [
             active_slot,
-            [0; 8],
-            [0; 8],
-            [0; 8],
+            [0; 32],
+            [0; 32],
+            [0; 32],
         ];
 
         assert_eq!(dmux4way(active_slot, selector), (expected));
@@ -77,13 +78,14 @@ mod test {
 
     #[test]
     fn if_sel_is_1_then_it_should_return_the_second_slot_active() {
-        let active_slot = [0, 1, 0, 0, 1, 1, 0, 1];
+        let active_slot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1];
         let selector = 1;
         let expected = [
-            [0; 8],
+            [0; 32],
             active_slot,
-            [0; 8],
-            [0; 8],
+            [0; 32],
+            [0; 32],
         ];
 
         assert_eq!(dmux4way(active_slot, selector), (expected));
@@ -91,13 +93,14 @@ mod test {
 
     #[test]
     fn if_sel_is_2_then_it_should_return_the_third_slot_active() {
-        let active_slot = [0, 1, 0, 0, 1, 1, 0, 1];
+        let active_slot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1];
         let selector = 2;
         let expected = [
-            [0; 8],
-            [0; 8],
+            [0; 32],
+            [0; 32],
             active_slot,
-            [0; 8],
+            [0; 32],
         ];
 
         assert_eq!(dmux4way(active_slot, selector), (expected));
@@ -105,12 +108,14 @@ mod test {
 
     #[test]
     fn if_sel_is_3_then_it_should_return_the_last_slot_active() {
-        let active_slot = [0, 1, 0, 0, 1, 1, 0, 1];
+        let active_slot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1];
+
         let selector = 3;
         let expected = [
-            [0; 8],
-            [0; 8],
-            [0; 8],
+            [0; 32],
+            [0; 32],
+            [0; 32],
             active_slot,
         ];
 

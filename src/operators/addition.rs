@@ -1,7 +1,7 @@
 use crate::gates::basic::{xor, or, and};
 
 // Sum logic, (a XOR b) XOR Carry in, return bit (0 or 1) after logic.
-pub fn sum_bit(bit_a: u8, bit_b: u8, carry_in_bit: u8) -> u8{
+pub fn sum_bit(bit_a: u8, bit_b: u8, carry_in_bit: u8) -> u8 {
     xor(xor(bit_a, bit_b), carry_in_bit)
 }
 
@@ -36,7 +36,7 @@ pub fn three_input_carry_out_bit(bit_a: u8, bit_b: u8, bit_c: u8, carry_in_bit: 
             and(bit_b, carry_in_bit)
         ), 
         and(bit_c, carry_in_bit)
-    )
+    ) 
 }
 
 #[cfg(test)]

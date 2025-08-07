@@ -12,7 +12,7 @@ The function returns an array of 8 bits when a match is found.
 */
 
 // 8-WAY MULTIPLEXER: selects and returns one of 8 arrays based on selector.
-fn mux8way(input: &[[u8; 8]; 8], selector: u8) -> [u8; 8] {
+fn mux8way(input: &[[u8; 32]; 8], selector: u8) -> [u8; 32] {
     // Logic: if selector is 0, return A. If 1, return B. Etc.
     if selector == 0 {
         let a = input[0];
@@ -65,14 +65,29 @@ mod test {
 
     #[test]
     fn returns_correct_array_for_each_selector() {
-        let array0 = [1, 0, 1, 1, 0, 1, 0, 1];
-        let array1 = [1, 0, 0, 1, 0, 0, 1, 1];
-        let array2 = [1, 1, 1, 1, 1, 1, 1, 1];
-        let array3 = [0, 1, 0, 1, 0, 1, 0, 1];
-        let array4 = [1, 0, 1, 1, 0, 1, 0, 1];
-        let array5 = [1, 0, 0, 1, 0, 0, 1, 1];
-        let array6 = [1, 1, 1, 1, 1, 1, 1, 1];
-        let array7 = [0, 1, 0, 1, 0, 1, 0, 1];
+        let array0 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1];
+
+        let array1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1];
+
+        let array2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1];
+
+        let array3 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1];
+
+        let array4 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1];
+
+        let array5 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1];
+
+        let array6 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1];
+        
+        let array7 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1];
 
         let input = [
             array0,
