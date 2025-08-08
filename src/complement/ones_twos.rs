@@ -1,4 +1,4 @@
-use crate::adders::addition_adders::{thirty_two_bit_full_adder};
+use crate::adders::addition_adders::{addition_32_bit};
 
 // Applies ones complement by receiving an array and applying XOR bit-by-bit
 // against an array of only active bit positions.
@@ -14,11 +14,11 @@ fn ones_complement(input_byte: [u8; 32]) -> [u8; 32] {
 
 // Two's complement applied using 8-bit full adder with sum and carry out, 
 // starting at (LSB) moving to (MSB). 
-fn twos_complement(input_byte: [u8; 32]) -> ([u8; 32], u8) {
+fn twos_complement(input_byte: [u8; 32]) -> [u8; 32] {
     let increment = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1];
 
-    thirty_two_bit_full_adder(input_byte, increment)
+    addition_32_bit(input_byte, increment)
 }
 
 #[cfg(test)]
@@ -42,8 +42,8 @@ mod test {
         0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0];
         let ones_complement = ones_complement(input);
         let result = twos_complement(ones_complement);
-        let expected = ([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-            1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0], 0);
+        let expected = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+            1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0];
 
         assert_eq!((result), (expected));
     }

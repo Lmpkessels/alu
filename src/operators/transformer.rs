@@ -1,6 +1,6 @@
 // Takes a decimal number as argument and returns and array of bits with the
 // value of the decimal argument.
-fn decimal_to_binary(mut decimal_num: u32) -> [u8; 32] {
+pub fn decimal_to_binary(mut decimal_num: u32) -> [u8; 32] {
     let mut result = [0; 32];
     
     for i in (0..32).rev() {
@@ -14,7 +14,7 @@ fn decimal_to_binary(mut decimal_num: u32) -> [u8; 32] {
 // Takes a binary array starts a MSB, index 0, and returns its decimal value.
 // Each bit is multiplied by 2^(31 - index) using a left shift, subtracting the index
 // is used to decrease the shift as you go left.
-fn binary_to_decimal(bits: [u8; 32]) -> u32 {
+pub fn binary_to_decimal(bits: [u8; 32]) -> u32 {
     let mut result = 0;
 
     for i in 0..32 {

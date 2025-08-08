@@ -6,7 +6,7 @@ pub fn one_bit_full_adder(bit_a: u8, bit_b: u8, carry_in_bit: u8) -> (u8, u8) {
 
 // eight bit full adder, receiving as argument two arrays.
 // Fn returns a byte + overflow.
-pub fn thirty_two_bit_full_adder(byte_a: [u8; 32], byte_b: [u8; 32]) -> ([u8; 32], u8) {
+pub fn addition_32_bit(byte_a: [u8; 32], byte_b: [u8; 32]) -> [u8; 32] {
     let mut result_byte = [0; 32];
     let mut carry_out_bit = 0;
 
@@ -19,7 +19,7 @@ pub fn thirty_two_bit_full_adder(byte_a: [u8; 32], byte_b: [u8; 32]) -> ([u8; 32
         carry_out_bit = carry_in_bit;
     }
 
-    (result_byte, carry_out_bit)
+    result_byte
 }
 
 #[cfg(test)]
@@ -40,22 +40,10 @@ mod tests {
         0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0];
         let bit_b = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
         0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0];
-        let expected = ([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-            0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0], 0);
+        let expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+            0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0];
         
         
-        assert_eq!(thirty_two_bit_full_adder(bit_a, bit_b), (expected));
-    }
-
-    #[test]
-    fn thirty_two_adder_handles_full_overflow() {
-        let byte_a = [1; 32];
-        let byte_b = [1; 32];
-        let expected_sum_byte = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0];
-        let expected_carry_out_bit = 1;
-
-        assert_eq!(thirty_two_bit_full_adder(byte_a, byte_b), 
-        (expected_sum_byte, expected_carry_out_bit));
+        assert_eq!(addition_32_bit(bit_a, bit_b), (expected));
     }
 }
