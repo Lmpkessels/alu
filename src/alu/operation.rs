@@ -1,24 +1,33 @@
-use crate::operators::transformer::{decimal_to_binary, binary_to_decimal};
-use crate::adders::{addition_32_bit, subtraction_32_bit};
+use crate::operators::transformer::{
+    decimal_to_binary, binary_to_decimal, addition_decimal_to_binary
+};
+use crate::adders::{addition_32_bit, subtraction_32_bit, multiply_16_x_16};
 
 enum Operation {
     Add,
     Subtract,
+    Multiply,
 }
 
 fn alu(a: u32, b: u32, gate: Operation) -> u32 {
-    let byte_a = decimal_to_binary(a);
-    let byte_b = decimal_to_binary(b);
+    let word_a = decimal_to_binary(a);
+    let word_b = decimal_to_binary(b);
 
-    let addition = addition_32_bit(byte_a, byte_b);
-    let subtraction = subtraction_32_bit(byte_a, byte_b);
+    let multiply_word_a = addition_decimal_to_binary(a);
+    let multiply_word_b = addition_decimal_to_binary(b);
 
-    let dec_add = binary_to_decimal(addition);
-    let dec_subtr = binary_to_decimal(subtraction);
+    let addition = addition_32_bit(word_a, word_b);
+    let subtraction = subtraction_32_bit(word_a, word_b);
+    let multiplication = multiply_16_x_16(multiply_word_a, multiply_word_b);
+
+    let dec_addition = binary_to_decimal(addition);
+    let dec_subtraction = binary_to_decimal(subtraction);
+    let dec_multiplication = binary_to_decimal(multiplication);
 
     match gate {
-        Operation::Add => dec_add,
-        Operation::Subtract => dec_subtr, 
+        Operation::Add => dec_addition,
+        Operation::Subtract => dec_subtraction,
+        Operation::Multiply => dec_multiplication
     }
 }
 
@@ -44,6 +53,17 @@ mod test {
         let operator = Operation::Subtract;
         let result = alu(a, b, operator);
         let expected = 81;
+
+        assert_eq!((result), (expected));
+    }
+
+    #[test]
+    fn multiply_a_by_b() {
+        let a = 33;
+        let b = 23;
+        let operator = Operation::Multiply;
+        let result = alu(a, b, operator);
+        let expected = 759;
 
         assert_eq!((result), (expected));
     }
