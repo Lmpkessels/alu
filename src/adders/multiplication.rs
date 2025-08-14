@@ -10,7 +10,7 @@ pub fn multiply_16_x_16(word_a: [u8; 16], word_b: [u8; 16]) -> [u8; 32] {
     let mut result = [0u8; 32];
     
     for i in (0..16).rev() {
-        // We continue if word_b[i] is 0 because word_a[j] & 0 = 0, 
+        // Continue if word_b[i] is 0 because word_a[j] & 0 = 0, 
         // so it's unnecessary to create an entire array for this. 
         if word_b[i] == 0 {
             continue;
