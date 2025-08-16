@@ -43,8 +43,6 @@ src/
 
 Planned before freeze:
 
-- [ ] A working ALU
-- [ ] A calculator using the adder logic
 - [ ] Final cleanup of code and notes
 
 After this, the project will be archived as a complete learning snapshot.
