@@ -9,7 +9,7 @@ enum Operation {
     Add,
     Subtract,
     Multiply,
-    Devide,
+    Divide,
 }
 
 fn alu(a: u32, b: u32, gate: Operation) -> u32 {
@@ -33,7 +33,7 @@ fn alu(a: u32, b: u32, gate: Operation) -> u32 {
         Operation::Add => dec_addition,
         Operation::Subtract => dec_subtraction,
         Operation::Multiply => dec_multiplication,
-        Operation::Devide => dec_division,
+        Operation::Divide => dec_division,
     }
 }
 
@@ -78,7 +78,7 @@ mod test {
     fn devides_a_by_b() {
         let a = 28;
         let b = 11;
-        let operator = Operation::Devide;
+        let operator = Operation::Divide;
         let result = alu(a, b, operator);
         let expected = 2;
 
