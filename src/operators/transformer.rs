@@ -1,38 +1,38 @@
 // Takes a decimal number as argument and returns and array of bits with the
 // value of the decimal argument.
-pub fn decimal_to_binary(mut decimal_num: u32) -> [u8; 32] {
-    let mut result = [0; 32];
+pub fn int_to_32bit(mut integer: u32) -> [u8; 32] {
+    let mut word = [0; 32];
     
     for i in (0..32).rev() {
-        result[i] = decimal_num as u8 % 2;
-        decimal_num /= 2;
+        word[i] = integer as u8 % 2;
+        integer /= 2;
     }
 
-    result
+    word
 }
 
-pub fn addition_decimal_to_binary(mut decimal_num: u32) -> [u8; 16] {
-    let mut result = [0; 16];
+pub fn int_to_16bit(mut integer: u32) -> [u8; 16] {
+    let mut word = [0; 16];
 
     for i in (0..16).rev() {
-        result[i] = decimal_num as u8 % 2;
-        decimal_num /= 2;
+        word[i] = integer as u8 % 2;
+        integer /= 2;
     }
 
-    result
+    word
 }
 
 // Takes a binary array starts a MSB, index 0, and returns its decimal value.
 // Each bit is multiplied by 2^(31 - index) using a left shift, subtracting the index
 // is used to decrease the shift as you go left.
-pub fn binary_to_decimal(bits: [u8; 32]) -> u32 {
-    let mut result = 0;
+pub fn t2bit_to_int(word: [u8; 32]) -> u32 {
+    let mut integer = 0;
 
     for i in 0..32 {
-        result += (bits[i] as u32) << (31 - i);
+        integer += (word[i] as u32) << (31 - i);
     }
 
-    result
+    integer
 }
 
 #[cfg(test)]
@@ -40,21 +40,31 @@ mod test {
     use super::*;
 
     #[test]
-    fn goes_from_decimal_to_binary_returned_in_an_array() {
-        let decimal = 34;
-        let result = decimal_to_binary(decimal);
-        let expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0];
+    fn int_to_32bit_takes_integer_then_returns_32_bit_word() {
+        let integer = 34;
+        let result = int_to_32bit(integer);
+        let expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0];
 
         assert_eq!((result), (expected));
     }
 
     #[test]
-    fn goes_from_array_with_byte_to_returning_its_decimal() {
-        let byte = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1];
-        let result = binary_to_decimal(byte);
+    fn int_to_16bit_takes_integer_then_returns_16_bit_word() {
+        let t6bit_word = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1];
+        let result = t2bit_to_int(t6bit_word);
         let expected = 181;
+
+        assert_eq!((result), (expected));
+    }
+
+    #[test]
+    fn t2bit_to_int_takes_32_bit_word_then_returns_integer() {
+        let t2bit_word = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0];
+        let result = t2bit_to_int(t2bit_word);
+        let expected = 212;
 
         assert_eq!((result), (expected));
     }

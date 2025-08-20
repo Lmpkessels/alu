@@ -1,10 +1,9 @@
-pub mod addition_adders;
-pub mod subtraction_adders;
-pub mod three_input_full_adder_8bit;
-pub mod multiplication;
-pub mod division;
+pub mod add;
+pub mod sub;
+pub mod multiply;
+pub mod div;
 
-pub use addition_adders::addition_32_bit;
-pub use subtraction_adders::subtraction_32_bit;
-pub use multiplication::multiply_16_x_16;
-pub use division::division_32;
+pub use add::add_32bit;
+pub use sub::sub_32bit;
+pub use multiply::multiply_16x16bit;
+pub use div::div_32bit;

@@ -1,8 +1,8 @@
 use crate::operators::transformer::{
-    decimal_to_binary, binary_to_decimal, addition_decimal_to_binary
+    int_to_32bit, int_to_16bit, t2bit_to_int
 };
 use crate::adders::{
-    addition_32_bit, subtraction_32_bit, multiply_16_x_16, division_32
+    add_32bit, sub_32bit, multiply_16x16bit, div_32bit
 };
 
 enum Operation {
@@ -13,21 +13,21 @@ enum Operation {
 }
 
 fn alu(a: u32, b: u32, gate: Operation) -> u32 {
-    let word_a = decimal_to_binary(a);
-    let word_b = decimal_to_binary(b);
+    let word_a = int_to_32bit(a);
+    let word_b = int_to_32bit(b);
 
-    let multiply_word_a = addition_decimal_to_binary(a);
-    let multiply_word_b = addition_decimal_to_binary(b);
+    let multiply_word_a = int_to_16bit(a);
+    let multiply_word_b = int_to_16bit(b);
 
-    let addition = addition_32_bit(word_a, word_b);
-    let subtraction = subtraction_32_bit(word_a, word_b);
-    let multiplication = multiply_16_x_16(multiply_word_a, multiply_word_b);
-    let division = division_32(word_a, word_b);
+    let addition = add_32bit(word_a, word_b);
+    let subtraction = sub_32bit(word_a, word_b);
+    let multiplication = multiply_16x16bit(multiply_word_a, multiply_word_b);
+    let division = div_32bit(word_a, word_b);
 
-    let dec_addition = binary_to_decimal(addition);
-    let dec_subtraction = binary_to_decimal(subtraction);
-    let dec_multiplication = binary_to_decimal(multiplication);
-    let dec_division = binary_to_decimal(division);
+    let dec_addition = t2bit_to_int(addition);
+    let dec_subtraction = t2bit_to_int(subtraction);
+    let dec_multiplication = t2bit_to_int(multiplication);
+    let dec_division = t2bit_to_int(division);
 
     match gate {
         Operation::Add => dec_addition,

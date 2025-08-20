@@ -1,4 +1,4 @@
-use crate::adders::subtraction_adders::subtraction_32_bit;
+use crate::adders::sub::sub_32bit;
 
 /*
 Check if remainder >= divisor, to know what to write down in the quotient.
@@ -6,11 +6,11 @@ Check if remainder >= divisor, to know what to write down in the quotient.
 - If remainder >= divisor write down 1 (true is returned).
 - If remainder < divisor write down 0 (false is returned).
 */
-fn is_greater_or_equal(remainder: [u8; 32], devisor: [u8; 32]) -> bool {
+fn greater_or_equal(remainder: [u8; 32], divisor: [u8; 32]) -> bool {
     for i in 0..32 {
-        if remainder[i] > devisor[i] {
+        if remainder[i] > divisor[i] {
             return true;
-        } else if remainder[i] < devisor[i] {
+        } else if remainder[i] < divisor[i] {
             return false;
         }
     }
@@ -41,17 +41,17 @@ at index 31.
 - If remainder >= divisor, quotient is 1.
 - If remainder < divisor, quotient is 0.
 */
-pub fn division_32(devidend: [u8; 32], devisor: [u8; 32]) -> [u8; 32] {
+pub fn div_32bit(dividend: [u8; 32], divisor: [u8; 32]) -> [u8; 32] {
     let mut quotient = [0u8; 32];
     let mut remainder = [0u8; 32];
 
     for i in 0..32 {
-        shift_left(&mut remainder, devidend[i]);
+        shift_left(&mut remainder, dividend[i]);
 
-        if is_greater_or_equal(remainder, devisor) {
+        if greater_or_equal(remainder, divisor) {
             // Get new remainder through subtracting divisor from remainder,
             // at every new loop iteration.
-            let new_remainder = subtraction_32_bit(remainder, devisor);
+            let new_remainder = sub_32bit(remainder, divisor);
 
             // Store the new remainder to end up with the final remainder.
             remainder = new_remainder;
@@ -70,12 +70,12 @@ mod test {
     use super::*;
 
     #[test]
-    fn divides_dividend_by_divisor_and_returns_quotient_and_remainder() {
-        let devidend = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    fn div_32bit_computes_dividend_by_divisor_then_returns_quotient() {
+        let dividend = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
         0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0];
-        let devisor = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        let divisor = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
-        let result = division_32(devidend, devisor);
+        let result = div_32bit(dividend, divisor);
         
         let expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
