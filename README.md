@@ -1,69 +1,44 @@
-# binarySeries: A Low-Level Binary + Rust Learning Repo
+# axiom
 
-## Purpose
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![Built with Rust](https://img.shields.io/badge/Built%20with-Rust-red.svg)
 
-**binarySeries** is a deep learning project to understand binary computation and system logic through Rust.
+**axiom** is a Rust playground for binary math, logic gates, and ALU design.
 
-It works alongside the 3-part series on [lukefi.com](https://lukefi.com/).
+It started as _binarySeries_ and evolved into an implementation of an ALU (Arithmetic Logic Unit).
 
----
+Inspired by the first chapters of _Nand2Tetris_ (Ch. 1–3), it serves as a lab for learning low-level systems, logic, and math.
 
 ## Setup
 
 ```bash
-git clone https://github.com/Lmpkessels/binarySeries.git
-cd binarySeries
+git clone https://github.com/Lmpkessels/axiom.git
+cd axiom
 cargo test
 ```
 
 Navigate through folders by topic.
 
----
-
 ## Folder Structure
 
 ```
 src/
-├── adders/
-├── alu/
-├── complement_logic/
-├── flags/
-├── gates/
-├── multi_bit_logic/
-├── operators/
-├── routing/
+├── adders/      # Binary adders, subtractors, multipliers, dividers
+├── alu/         # Arithmetic Logic Unit
+├── gates/       # Logic gates (AND, OR, XOR, NAND, etc.)
+├── operators/   # Integer–bit converters, transformations
 ```
 
 > Each folder contains its own logic and tests.
 > Run `cargo test` to validate any module.
 
----
-
-## Roadmap
-
-Planned before freeze:
-
-- [ ] Final cleanup of code and notes
-
-After this, the project will be archived as a complete learning snapshot.
-
----
-
 ## License
 
-This project is licensed under the [MIT License](./LICENSE).
+This project is licensed under the [MIT License](./LICENSE). <br/>
 © 2025 Luuk Kessels
-
----
 
 ## Connect
 
-- 📧 [luuk@lukefi.com](mailto:luuk@lukefi.com)
-- 🧠 [LinkedIn](https://www.linkedin.com/in/luuk-kessels/)
-- 🐦 [@lukefi\_ on X/Twitter](https://x.com/lukefi_)
-- 🛠️ [Open an issue](https://github.com/Lmpkessels/rust101/issues/new)
-
----
-
-**P.S.** Mental models and notes from this repo are shared at:
-👉 [lukefi.com/math/](https://lukefi.com/math/)
+- 📧 [l@lmpkessels.com](mailto:l@lmpkessels.com)
+- 🐦 [@lmpkessels on X/Twitter](https://x.com/lmpkessels)
+- 🛠️ [Open an issue](https://github.com/Lmpkessels/axiom/issues/new)
