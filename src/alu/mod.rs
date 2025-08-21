@@ -1,1 +1,1 @@
-pub mod arithmetic_logic_unit;
+pub mod core;

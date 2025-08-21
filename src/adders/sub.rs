@@ -1,18 +1,24 @@
 use crate::gates::{not, and, or, xor};
 
-// Subtraction 8 bit full adder starting at (LSB) moving to (MSB) while applying
-// bit-by-bit difference and borrow out.
-//
-// Returns the result byte and underflow if detected.
+/// 32-bit subtraction.
+/// 
+/// Ripple-borrow subtractor logic (LSB → MSB):
+/// - Difference: a[bit] XOR b[bit] XOR borrow_in
+/// - Borrow: (NOT(a[bit]) AND b[bit]) OR ((NOT(a[bit] XOR b[bit])) AND diff_bit)
+/// 
+/// Returns: 32-bit difference word.
 pub fn sub_32bit(minuend: [u8; 32], subtrahend: [u8; 32]) -> [u8; 32] {
     let mut difference = [0; 32];
     let mut bout_bit = 0;
 
+    // Start from least significant bit (rightmost = index 31)
     for bit in (0..32).rev() {
         let diff_bit = xor(xor(minuend[bit], subtrahend[bit]), bout_bit);
 
-        bout_bit = or(and(not(minuend[bit]), subtrahend[bit]), 
-        and(not(xor(minuend[bit], subtrahend[bit])), diff_bit));
+        bout_bit = or(
+            and(not(minuend[bit]), subtrahend[bit]),
+            and(not(xor(minuend[bit], subtrahend[bit])), diff_bit),
+        );
 
         difference[bit] = diff_bit;
     }
@@ -25,7 +31,7 @@ mod test {
     use super::*;
 
     #[test]
-    fn sub_32bit_computes_minuend_by_subtrahend_then_returns_difference() {
+    fn sub_32bit_computes_a_minus_b_and_returns_difference() {
         let minuend = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
         0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0];
         let subtrahend = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
@@ -35,6 +41,6 @@ mod test {
         let expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
              0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0];
 
-        assert_eq!((result), (expected));
+        assert_eq!(result, expected);
     }
 }

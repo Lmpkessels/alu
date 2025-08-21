@@ -1,17 +1,17 @@
 use crate::adders::add::add_32bit;
 
-/*
-Multiply 16 x 16, using add and shift left. 
-
-Starting at least significant bit (LSB) rightmost moving to most significant 
-bit (MSB) leftmost.
-*/
+/// 16×16-bit multiplication.
+/// 
+/// Uses the shift-and-add method:
+/// - For each set bit in the multiplier, shift the multiplicant and add to product.
+/// - Shifts proceed from LSB to MSB.
+/// 
+/// Returns: 32-bit product.
 pub fn multiply_16x16bit(multiplicant: [u8; 16], multiplier: [u8; 16]) -> [u8; 32] {
     let mut product = [0u8; 32];
     
     for i in (0..16).rev() {
-        // Continue if word_b[i] is 0 because word_a[j] & 0 = 0, 
-        // so it's unnecessary to create an entire array for this. 
+        // Skip when multiplier[i] == 0 (no partial product)
         if multiplier[i] == 0 {
             continue;
         }
@@ -19,13 +19,12 @@ pub fn multiply_16x16bit(multiplicant: [u8; 16], multiplier: [u8; 16]) -> [u8; 3
         let mut partial = [0u8; 32];
         for j in (0..16).rev() {
             if multiplicant[j] == 1 {
-                // +1 is added to align the shifted word_a in the 32 bit array 
-                // when combining i & j.
+                // Shift multiplicant bit into 32-bit space (align with i+j position)
                 partial[i + 1 + j] = 1;
             }
         } 
-        // Result is reused for 16 times so it can add up the shifted partial 
-        // and puts the right carries in place.
+
+        // Add shifted partial into product (carry propagates correctly)
         product = add_32bit(product, partial);
     }
     product

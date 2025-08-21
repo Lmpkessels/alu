@@ -1,10 +1,11 @@
 use crate::operators::transformer::{
-    int_to_32bit, int_to_16bit, t2bit_to_int
+    int_to_32bit, int_to_16bit, bit32_to_int
 };
 use crate::adders::{
     add_32bit, sub_32bit, multiply_16x16bit, div_32bit
 };
 
+// Operation featurs of ALU.
 enum Operation {
     Add,
     Subtract,
@@ -12,6 +13,20 @@ enum Operation {
     Divide,
 }
 
+/// ALU (Arithmetic Logic Unit).
+///
+/// Takes two integers and an operation as input.
+/// Internally, the integers are transformed into binary words,
+/// the chosen operation is applied, and the result is transformed
+/// back into an integer.
+///
+/// Supported operations:
+/// - Add
+/// - Subtract
+/// - Multiply
+/// - Divide
+///
+/// Returns the result as a decimal integer.
 fn alu(a: u32, b: u32, gate: Operation) -> u32 {
     let word_a = int_to_32bit(a);
     let word_b = int_to_32bit(b);
@@ -24,10 +39,10 @@ fn alu(a: u32, b: u32, gate: Operation) -> u32 {
     let multiplication = multiply_16x16bit(multiply_word_a, multiply_word_b);
     let division = div_32bit(word_a, word_b);
 
-    let dec_addition = t2bit_to_int(addition);
-    let dec_subtraction = t2bit_to_int(subtraction);
-    let dec_multiplication = t2bit_to_int(multiplication);
-    let dec_division = t2bit_to_int(division);
+    let dec_addition = bit32_to_int(addition);
+    let dec_subtraction = bit32_to_int(subtraction);
+    let dec_multiplication = bit32_to_int(multiplication);
+    let dec_division = bit32_to_int(division);
 
     match gate {
         Operation::Add => dec_addition,
