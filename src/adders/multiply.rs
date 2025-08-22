@@ -1,4 +1,4 @@
-use crate::adders::add::add_32bit;
+use crate::adders::add::add_32bit_no;
 
 /// 16×16-bit multiplication.
 /// 
@@ -7,7 +7,7 @@ use crate::adders::add::add_32bit;
 /// - Shifts proceed from LSB to MSB.
 /// 
 /// Returns: 32-bit product.
-pub fn multiply_16x16bit(multiplicant: [u8; 16], multiplier: [u8; 16]) -> [u8; 32] {
+pub fn multiply_16x16bit(multiplicant: [u8; 16], multiplier: [u8; 16]) -> ([u8; 32], u8) {
     let mut product = [0u8; 32];
     
     for i in (0..16).rev() {
@@ -25,9 +25,9 @@ pub fn multiply_16x16bit(multiplicant: [u8; 16], multiplier: [u8; 16]) -> [u8; 3
         } 
 
         // Add shifted partial into product (carry propagates correctly)
-        product = add_32bit(product, partial);
+        product = add_32bit_no(product, partial);
     }
-    product
+    (product, 0)
 }
 
 
@@ -40,8 +40,8 @@ mod test {
         let a = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
         let b = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0]; 
         let result = multiply_16x16bit(a, b);
-        let expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+        let expected = ([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0], 0);
 
         assert_eq!((result), (expected));
     }
@@ -51,8 +51,8 @@ mod test {
         let b = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0];
         let a = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
         let result = multiply_16x16bit(a, b);
-        let expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0];
+        let expected = ([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0], 0);
 
         assert_eq!((result), (expected));
     }
@@ -62,8 +62,8 @@ mod test {
         let a = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1];
         let b = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1];
         let result = multiply_16x16bit(a, b);
-        let expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1];
+        let expected = ([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1], 0);
 
         assert_eq!((result), (expected));
     }

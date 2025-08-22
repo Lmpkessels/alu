@@ -1,4 +1,4 @@
-use crate::adders::sub::sub_32bit;
+use crate::adders::sub::sub_32bit_nu;
 
 /// 32-bit division.
 /// 
@@ -8,7 +8,11 @@ use crate::adders::sub::sub_32bit;
 /// - Otherwise, quotient[i] = 0.
 /// 
 /// Returns: quotient word (32 bits).
-pub fn div_32bit(dividend: [u8; 32], divisor: [u8; 32]) -> [u8; 32] {
+pub fn div_32bit(dividend: [u8; 32], divisor: [u8; 32]) -> ([u8; 32], u8) {
+    if divisor == [0u8; 32] {
+        return ([0u8; 32], 1);
+    }
+    
     let mut quotient = [0u8; 32];
     let mut remainder = [0u8; 32];
 
@@ -17,14 +21,14 @@ pub fn div_32bit(dividend: [u8; 32], divisor: [u8; 32]) -> [u8; 32] {
 
         if greater_or_equal(remainder, divisor) {
             // Update remainder for this step
-            remainder = sub_32bit(remainder, divisor);
+            remainder = sub_32bit_nu(remainder, divisor);
             quotient[i] = 1;
         } else {
             quotient[i] = 0;
         }
     }
 
-    quotient
+    (quotient, 0)
 }
 
 // Shift remainder left (MSB to index 0), append next dividend bit at index 31.
@@ -57,10 +61,23 @@ mod test {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0];
         let divisor = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1];
+
         let result = div_32bit(dividend, divisor);
-        
-        let expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0];
+        let expected = ([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0], 0);
+
+        assert_eq!((result), (expected));
+    }
+
+    #[test]
+    fn div_32bit_computes_overflow_since_divisor_is_0() {
+        let dividend = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0];
+        let divisor = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        let result = div_32bit(dividend, divisor);
+        let expected = ([0u8; 32], 1);
 
         assert_eq!((result), (expected));
     }

@@ -2,7 +2,7 @@ use crate::operators::transformer::{
     int_to_32bit, int_to_16bit, bit32_to_int
 };
 use crate::adders::{
-    add_32bit, sub_32bit, multiply_16x16bit, div_32bit
+    add_32bit_o, sub_32bit_u, multiply_16x16bit, div_32bit
 };
 
 // Operation featurs of ALU.
@@ -27,17 +27,17 @@ enum Operation {
 /// - Divide
 ///
 /// Returns the result as a decimal integer.
-fn alu(a: u32, b: u32, gate: Operation) -> u32 {
-    let word_a = int_to_32bit(a);
-    let word_b = int_to_32bit(b);
+fn alu(a: u32, b: u32, gate: Operation) -> (u32, u8) {
+    let word32_a = int_to_32bit(a);
+    let word32_b = int_to_32bit(b);
 
-    let multiply_word_a = int_to_16bit(a);
-    let multiply_word_b = int_to_16bit(b);
+    let word16_a = int_to_16bit(a);
+    let word16_b = int_to_16bit(b);
 
-    let addition = add_32bit(word_a, word_b);
-    let subtraction = sub_32bit(word_a, word_b);
-    let multiplication = multiply_16x16bit(multiply_word_a, multiply_word_b);
-    let division = div_32bit(word_a, word_b);
+    let addition = add_32bit_o(word32_a, word32_b);
+    let subtraction = sub_32bit_u(word32_a, word32_b);
+    let multiplication = multiply_16x16bit(word16_a, word16_b);
+    let division = div_32bit(word32_a, word32_b);
 
     let dec_addition = bit32_to_int(addition);
     let dec_subtraction = bit32_to_int(subtraction);
@@ -62,7 +62,7 @@ mod test {
         let b = 77;
         let operator = Operation::Add;
         let result = alu(a, b, operator);
-        let expected = 109;
+        let expected = (109, 0);
 
         assert_eq!((result), (expected));
     }
@@ -73,7 +73,7 @@ mod test {
         let b = 18;
         let operator = Operation::Subtract;
         let result = alu(a, b, operator);
-        let expected = 81;
+        let expected = (81, 0);
 
         assert_eq!((result), (expected));
     }
@@ -84,7 +84,7 @@ mod test {
         let b = 23;
         let operator = Operation::Multiply;
         let result = alu(a, b, operator);
-        let expected = 759;
+        let expected = (759, 0);
 
         assert_eq!((result), (expected));
     }
@@ -95,7 +95,7 @@ mod test {
         let b = 11;
         let operator = Operation::Divide;
         let result = alu(a, b, operator);
-        let expected = 2;
+        let expected = (2, 0);
 
         assert_eq!((result), (expected));
     }
