@@ -2,7 +2,7 @@
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Built with Rust](https://img.shields.io/badge/Built%20with-Rust-red.svg)
-![Status Slowed down](https://img.shields.io/badge/Status%20-Slowed-down-orange.svg)
+![Status: Slowed down](https://img.shields.io/badge/Status-Slowed%20down-orange.svg)
 
 **ALU** is a Rust playground for binary math, logic gates, and arithmetic operations.
 
